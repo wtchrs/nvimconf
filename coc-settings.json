@@ -1,0 +1,23 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": [
+        "javascript", "css", "markdown", "rust", "c", "cpp"
+    ],
+    "languageserver": {
+        "haskell":{
+            "command":"haskell-language-server-wrapper",
+            "args":["--lsp"],
+            "rootPatterns": [
+                "*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"
+            ],
+            "filetypes": ["haskell", "lhaskell"]
+        }
+    },
+
+    "clangd.semanticHighlighting": true,
+    "clangd.arguments": ["-header-insertion=never"],
+    "prettier.tabWidth": 4,
+    "rust-analyzer.inlayHints.typeHintsSeparator":"  » ",
+    "rust-analyzer.inlayHints.chainingHintsSeparator":"  ‣ ",
+    "rust-analyzer.inlayHints.refreshOnInsertMode":true,
+    "rust-analyzer.checkOnSave.command": "clippy"
+}
