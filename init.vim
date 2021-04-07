@@ -8,18 +8,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
   set omnifunc=v:lua.vim.lsp.omnifunc
-  nnoremap <silent> gd <Cmd>lua vim.lsp.buf.definition()<CR>
-  nnoremap <silent> K <Cmd>lua vim.lsp.buf.hover()<CR>
-  nnoremap <silent> <space>wa <cmd>lua vim.lsp.buf.add_workspace_folder()<CR>
-  nnoremap <silent> <space>wr <cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>
-  nnoremap <silent> <space>wl <cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>
-  nnoremap <silent> <space>D <cmd>lua vim.lsp.buf.type_definition()<CR>
-  nnoremap <silent> <space>rn <cmd>lua vim.lsp.buf.rename()<CR>
-  nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-  nnoremap <silent> <space>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-  nnoremap <silent> [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-  nnoremap <silent> ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-  nnoremap <silent> <space>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
@@ -28,6 +16,30 @@ Plug 'hrsh7th/nvim-compe'
   inoremap <silent><expr> <C-e>     compe#close('<C-e>')
   inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
   inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+  " tab to completion
+  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+Plug 'glepnir/lspsaga.nvim'
+  " lsp provider to find the cursor word definition and reference
+  nnoremap <silent> gh :Lspsaga lsp_finder<CR>
+  " code action
+  nnoremap <silent> <leader>ca :Lspsaga code_action<CR>
+  vnoremap <silent> <leader>ca :<C-U>Lspsaga range_code_action<CR>
+  " show hover doc
+  nnoremap <silent> K :Lspsaga hover_doc<CR>
+  " scroll hover doc or scroll in definition preview
+  nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+  nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+  " rename symbol
+  nnoremap <silent> rn :Lspsaga rename<CR>
+  " preview definition
+  nnoremap <silent> gd :Lspsaga preview_definition<CR>
+  " show signature help
+  nnoremap <silent> gs :Lspsaga signature_help<CR>
+  " jump diagnostics
+  nnoremap <silent> [g :Lspsaga diagnostic_jump_prev<CR>
+  nnoremap <silent> ]g :Lspsaga diagnostic_jump_next<CR>
 
 Plug 'preservim/nerdcommenter'
   let g:NERDCreateDefaultMappings = 0
@@ -40,6 +52,7 @@ Plug 'preservim/tagbar'
 
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "  exec 'source '.stdpath('config').'\coc-settings.vim'
+"Plug 'tjdevries/coc-zsh'
 
 Plug 'dense-analysis/ale'
   let g:ale_linters = {
@@ -104,30 +117,17 @@ Plug 'kyazdani42/nvim-tree.lua'
   nnoremap <leader>r :NvimTreeRefresh<CR>
   nnoremap <leader>n :NvimTreeFindFile<CR>
 
-Plug 'romgrk/barbar.nvim'
-  " Magic buffer-picking mode
-  nnoremap <silent> <C-s> :BufferPick<CR>
-  " Sort automatically by...
-  nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
-  nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
-  " Move to previous/next
-  nnoremap <silent> <A-,> :BufferPrevious<CR>
-  nnoremap <silent> <A-.> :BufferNext<CR>
-  " Re-order to previous/next
-  nnoremap <silent> <A-<> :BufferMovePrevious<CR>
-  nnoremap <silent> <A->> :BufferMoveNext<CR>
-  " Goto buffer in position...
-  nnoremap <silent> <A-1> :BufferGoto 1<CR>
-  nnoremap <silent> <A-2> :BufferGoto 2<CR>
-  nnoremap <silent> <A-3> :BufferGoto 3<CR>
-  nnoremap <silent> <A-4> :BufferGoto 4<CR>
-  nnoremap <silent> <A-5> :BufferGoto 5<CR>
-  nnoremap <silent> <A-6> :BufferGoto 6<CR>
-  nnoremap <silent> <A-7> :BufferGoto 7<CR>
-  nnoremap <silent> <A-8> :BufferGoto 8<CR>
-  nnoremap <silent> <A-9> :BufferLast<CR>
+Plug 'akinsho/nvim-bufferline.lua'
+  nnoremap <silent> <A-1> :lua require"bufferline".go_to_buffer(1)<CR>
+  nnoremap <silent> <A-2> :lua require"bufferline".go_to_buffer(2)<CR>
+  nnoremap <silent> <A-3> :lua require"bufferline".go_to_buffer(3)<CR>
+  nnoremap <silent> <A-4> :lua require"bufferline".go_to_buffer(4)<CR>
+  nnoremap <silent> <A-5> :lua require"bufferline".go_to_buffer(5)<CR>
+  nnoremap <silent> <A-6> :lua require"bufferline".go_to_buffer(6)<CR>
+  nnoremap <silent> <A-7> :lua require"bufferline".go_to_buffer(7)<CR>
+  nnoremap <silent> <A-8> :lua require"bufferline".go_to_buffer(8)<CR>
   " Close buffer
-  nnoremap <silent> <A-c> :BufferClose<CR>
+  nnoremap <silent> <A-c> :bdelete<CR>
 
 " Vim Theme
 Plug 'arcticicestudio/nord-vim'
@@ -191,18 +191,17 @@ Plug 'mhinz/vim-crates'
   augroup END
 
 Plug 'turbio/bracey.vim'
-Plug 'tjdevries/coc-zsh'
 Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'airblade/vim-gitgutter'
+Plug 'dstein64/vim-startuptime'
 
 call plug#end()
 " }}} End Vim-Plug Settings
 
-" Loading galaxyline setting from lua file
-"lua require'spaceline'
-lua require'eviline'
-lua require'lspconfig-custom'
+lua require'aeroline'
+lua require'lspconfig-settings'
+lua require'bufln'
 
 set background=dark
 colorscheme nord
@@ -281,10 +280,9 @@ endif
 " Change Color Highlight
 " No background color for transparency
 "highlight Normal guibg=NONE ctermbg=NONE
-" change modified buffer color
-highlight BufferCurrentMod guifg=lightgreen guibg=#2e3440
-highlight BufferVisibleMod guifg=lightgreen guibg=#4c566a
-highlight BufferInactiveMod guifg=lightgreen guibg=#3b4252
+" lsp diagnostic color
+highlight LspDiagnosticsVirtualTextError guifg=Red
+highlight LspDiagnosticsVirtualTextWarning guifg=Yellow
 " change inlay hint color
 highlight! link CocHintSign Comment
 
