@@ -285,6 +285,7 @@ gls.right[1]= {
   FileFormat = {
     provider = 'FileFormat',
     separator = ' ',
+    separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.fg,colors.line_bg,'bold'},
   }
 }
@@ -292,6 +293,7 @@ gls.right[2] = {
   LineInfo = {
     provider = 'LineColumn',
     separator = ' ',
+    separator_highlight = {colors.blue,colors.line_bg},
     highlight = {colors.fg,colors.line_bg},
   },
 }
