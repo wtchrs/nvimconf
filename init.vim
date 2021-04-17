@@ -32,7 +32,7 @@ Plug 'glepnir/lspsaga.nvim'
   nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
   nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
   " rename symbol
-  nnoremap <silent> rn :Lspsaga rename<CR>
+  nnoremap <silent> <leader>rn :Lspsaga rename<CR>
   " preview definition
   nnoremap <silent> gd :Lspsaga preview_definition<CR>
   " show signature help
@@ -281,8 +281,8 @@ endif
 " No background color for transparency
 "highlight Normal guibg=NONE ctermbg=NONE
 " lsp diagnostic color
-highlight LspDiagnosticsVirtualTextError guifg=Red
-highlight LspDiagnosticsVirtualTextWarning guifg=Yellow
+highlight LspDiagnosticsVirtualTextError guifg=#FFA500
+highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
 " change inlay hint color
 highlight! link CocHintSign Comment
 
