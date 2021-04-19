@@ -87,15 +87,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'glepnir/dashboard-nvim'
   let g:dashboard_default_executive = 'telescope'
-  augroup DashboardSetting
-    autocmd!
-    autocmd FileType dashboard set nowrap
-    let ftToDisableWrap = ['dashboard']
-    autocmd BufEnter *
-        \ if index(ftToDisableWrap, &ft) < 0 | set wrap |
-        \ else | set nowrap |
-        \ endif
-  augroup END
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -271,6 +262,22 @@ augroup NewBuffer
       \ endif
 augroup END
 
+augroup DisableWrapFT
+  autocmd!
+  autocmd FileType dashboard set nowrap
+  let ftToDisableWrap = ['dashboard', 'NvimTree']
+  autocmd BufEnter *
+      \ if index(ftToDisableWrap, &ft) < 0 | set wrap |
+      \ else | set nowrap |
+      \ endif
+augroup END
+
+augroup file_type
+  autocmd!
+  autocmd FileType vim,sh,zsh,html,lua setlocal shiftwidth=2 tabstop=2
+  autocmd FileType help,h wincmd L
+augroup END
+
 if exists('+termguicolors')
   let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
@@ -285,12 +292,6 @@ highlight LspDiagnosticsVirtualTextError guifg=#FFA500
 highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
 " change inlay hint color
 highlight! link CocHintSign Comment
-
-augroup file_type
-  autocmd!
-  autocmd FileType vim,sh,zsh,html,lua setlocal shiftwidth=2 tabstop=2
-  autocmd FileType help,h wincmd L
-augroup END
 
 " skip over closing parenthesis
 "inoremap <expr> <Tab> stridx('])}"', getline('.')[col('.')-1])==-1 ?
