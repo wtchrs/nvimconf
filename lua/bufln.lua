@@ -2,6 +2,8 @@
 
 require "bufferline".setup {
   options = {
+    numbers = "ordinal",
+    number_style = "",
     max_name_length = 14,
     max_prefix_length = 13,
     tab_size = 18,
