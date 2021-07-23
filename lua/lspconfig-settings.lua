@@ -4,6 +4,7 @@ nvim_lsp.bashls.setup{}
 nvim_lsp.clangd.setup{}
 nvim_lsp.cmake.setup{}
 nvim_lsp.rust_analyzer.setup{}
+nvim_lsp.tsserver.setup{}
 nvim_lsp.vimls.setup{}
 
 require'compe'.setup {

@@ -4,7 +4,21 @@
 
 local gl = require('galaxyline')
 local gls = gl.section
-gl.short_line_list = {'NvimTree','vista','dbui'}
+
+gl.short_line_list = {
+  'NvimTree',
+  'LuaTree',
+  'dashboard',
+  'vista',
+  'floaterm',
+  'dbui',
+  'startify',
+  'term',
+  'nerdtree',
+  'fugitive',
+  'fugitiveblame',
+  'plug'
+}
 
 local colors = {
   bg = '#282c34',
@@ -78,6 +92,8 @@ gls.left[6] = {
   GitBranch = {
     provider = 'GitBranch',
     condition = require('galaxyline.provider_vcs').check_git_workspace,
+    separator = ' ',
+    separator_highlight = {colors.line_bg,colors.line_bg},
     highlight = {'#8FBCBB',colors.line_bg,'bold'},
   }
 }
@@ -117,9 +133,7 @@ gls.left[9] = {
 gls.left[10] = {
   LeftEnd = {
     provider = function() return '' end,
-    separator = '',
-    separator_highlight = {colors.bg,colors.line_bg},
-    highlight = {colors.line_bg,colors.line_bg}
+    highlight = {colors.bg,colors.line_bg},
   }
 }
 gls.left[11] = {
@@ -142,15 +156,7 @@ gls.left[13] = {
     highlight = {colors.blue,colors.bg},
   }
 }
---gls.left[14] = {
---  CocStatus = {
---    provider = function ()
---      return vim.api.nvim_call_function('coc#status',{})
---    end,
---    icon = '  ',
---    highlight = {colors.fg,colors.bg}
---  }
---}
+
 gls.right[1]= {
   FileFormat = {
     provider = 'FileFormat',
@@ -177,7 +183,27 @@ gls.right[3] = {
 }
 gls.right[4] = {
   ScrollBar = {
-    provider = 'ScrollBar',
+    --provider = 'ScrollBar',
+    provider = function(scroll_bar_chars)
+      local current_line = vim.fn.line('.')
+      local total_lines = vim.fn.line('$')
+      local default_chars = {'_', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'}
+      local chars = scroll_bar_chars or default_chars
+      local index = 1
+
+      if  current_line == 1 then
+        index = 1
+      elseif current_line == total_lines then
+        index = #chars
+      else
+        local line_no_fraction = vim.fn.floor(current_line) / vim.fn.floor(total_lines)
+        index = vim.fn.float2nr(line_no_fraction * #chars)
+        if index == 0 then
+          index = 1
+        end
+      end
+      return chars[index]
+    end,
     highlight = {colors.blue,colors.purple},
   }
 }

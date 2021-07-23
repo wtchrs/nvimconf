@@ -27,8 +27,10 @@ Plug 'hrsh7th/nvim-compe'
   inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
   inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
   " tab to completion
-  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+  inoremap <silent><expr> <TAB> pumvisible() ?
+      \ "\<C-n>" : stridx("])}\'\"", getline('.')[col('.')-1])==-1 ?
+      \ "\<TAB>" : "\<Right>"
+  inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 Plug 'glepnir/lspsaga.nvim'
   " lsp provider to find the cursor word definition and reference
@@ -177,7 +179,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/indentLine'
   let g:indentLine_char = '│'
   let g:indentLine_fileTypeExclude = ['help', 'dashboard', 'json']
-Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Rust, Crates, Toml
 Plug 'rust-lang/rust.vim'
@@ -191,7 +192,7 @@ Plug 'mhinz/vim-crates'
     endif
   augroup END
 
-Plug 'turbio/bracey.vim'
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'airblade/vim-gitgutter'
@@ -200,7 +201,7 @@ Plug 'dstein64/vim-startuptime'
 call plug#end()
 " }}} End Vim-Plug Settings
 
-lua require'aeroline'
+lua require'spaceline'
 lua require'lspconfig-settings'
 lua require'bufln'
 

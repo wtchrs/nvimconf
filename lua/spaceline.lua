@@ -4,7 +4,21 @@
 
 local gl = require('galaxyline')
 local gls = gl.section
-gl.short_line_list = {'NvimTree','vista','dbui'}
+
+gl.short_line_list = {
+  'NvimTree',
+  'LuaTree',
+  'dashboard',
+  'vista',
+  'floaterm',
+  'dbui',
+  'startify',
+  'term',
+  'nerdtree',
+  'fugitive',
+  'fugitiveblame',
+  'plug'
+}
 
 local colors = {
   bg = '#282c34',
@@ -36,10 +50,17 @@ gls.left[1] = {
 gls.left[2] = {
   ViMode = {
     provider = function()
-      local alias = {n = 'NORMAL',i = 'INSERT',c= 'COMMAND',V= 'VISUAL', [''] = 'VISUAL'}
+      -- auto change color according the vim mode
+      --local mode_color = {n = colors.magenta, i = colors.green,v=colors.blue,[''] = colors.blue,V=colors.blue,
+      --                    c = colors.red,no = colors.magenta,s = colors.orange,S=colors.orange,
+      --                    [''] = colors.orange,ic = colors.yellow,R = colors.purple,Rv = colors.purple,
+      --                    cv = colors.red,ce=colors.red, r = colors.cyan,rm = colors.cyan, ['r?'] = colors.cyan,
+      --                    ['!']  = colors.red,t = colors.red}
+      --vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color[vim.fn.mode()])
+      local alias = {n = 'NORMAL ',i = 'INSERT ',c= 'COMMAND ',V= 'VISUAL ', [''] = 'VISUAL '}
       return alias[vim.fn.mode()]
     end,
-    separator = '',
+    separator = ' ',
     separator_highlight = {colors.yellow,function()
       if not buffer_not_empty() then
         return colors.purple
@@ -77,6 +98,8 @@ gls.left[6] = {
   GitBranch = {
     provider = 'GitBranch',
     condition = buffer_not_empty,
+    separator = ' ',
+    separator_highlight = {colors.grey,colors.purple},
     highlight = {colors.grey,colors.purple},
   }
 }
@@ -116,9 +139,7 @@ gls.left[9] = {
 gls.left[10] = {
   LeftEnd = {
     provider = function() return '' end,
-    separator = '',
-    separator_highlight = {colors.purple,colors.bg},
-    highlight = {colors.purple,colors.purple}
+    highlight = {colors.purple,colors.bg},
   }
 }
 gls.left[11] = {
@@ -130,7 +151,8 @@ gls.left[11] = {
 }
 gls.left[12] = {
   Space = {
-    provider = function () return ' ' end
+    provider = function () return ' ' end,
+    highlight = {colors.bg,colors.bg}
   }
 }
 gls.left[13] = {
@@ -140,19 +162,11 @@ gls.left[13] = {
     highlight = {colors.blue,colors.bg},
   }
 }
-gls.left[14] = {
-  CocStatus = {
-    provider = function ()
-      return vim.api.nvim_call_function('coc#status',{})
-    end,
-    icon = '   ',
-    highlight = {colors.grey,colors.bg}
-  }
-}
+
 gls.right[1]= {
   FileFormat = {
     provider = 'FileFormat',
-    separator = '',
+    separator = ' ',
     separator_highlight = {colors.bg,colors.purple},
     highlight = {colors.grey,colors.purple},
   }
@@ -175,7 +189,27 @@ gls.right[3] = {
 }
 gls.right[4] = {
   ScrollBar = {
-    provider = 'ScrollBar',
+    --provider = 'ScrollBar',
+    provider = function(scroll_bar_chars)
+      local current_line = vim.fn.line('.')
+      local total_lines = vim.fn.line('$')
+      local default_chars = {'_', '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'}
+      local chars = scroll_bar_chars or default_chars
+      local index = 1
+
+      if  current_line == 1 then
+        index = 1
+      elseif current_line == total_lines then
+        index = #chars
+      else
+        local line_no_fraction = vim.fn.floor(current_line) / vim.fn.floor(total_lines)
+        index = vim.fn.float2nr(line_no_fraction * #chars)
+        if index == 0 then
+          index = 1
+        end
+      end
+      return chars[index]
+    end,
     highlight = {colors.yellow,colors.purple},
   }
 }
@@ -188,7 +222,6 @@ gls.short_line_left[1] = {
     highlight = {colors.grey,colors.purple}
   }
 }
-
 
 gls.short_line_right[1] = {
   BufferIcon = {
