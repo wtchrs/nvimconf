@@ -26,11 +26,22 @@ Plug 'hrsh7th/nvim-compe'
   inoremap <silent><expr> <C-e>     compe#close('<C-e>')
   inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
   inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-  " tab to completion
-  inoremap <silent><expr> <TAB> pumvisible() ?
-      \ "\<C-n>" : stridx("])}\'\"", getline('.')[col('.')-1])==-1 ?
-      \ "\<TAB>" : "\<Right>"
+  " Tab to completion and skip over closing parenthesis
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" : SkipClosingParentheses()
   inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! SkipClosingParentheses()
+    let line = getline('.')
+    let current_char = line[col('.')-1]
+
+    "Ignore EOL
+    if col('.') == col('$')
+      return "\t"
+    end
+
+    return stridx(">]})'\"`", current_char)==-1 ? "\t" : "\<Right>"
+  endfunction
 
 Plug 'glepnir/lspsaga.nvim'
   " lsp provider to find the cursor word definition and reference
@@ -176,9 +187,9 @@ Plug 'liuchengxu/vista.vim'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'easymotion/vim-easymotion'
 
-Plug 'Yggdroot/indentLine'
-  let g:indentLine_char = '│'
-  let g:indentLine_fileTypeExclude = ['help', 'dashboard', 'json']
+Plug 'lukas-reineke/indent-blankline.nvim'
+  let g:indent_blankline_char = '│'
+  let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'json']
 
 " Rust, Crates, Toml
 Plug 'rust-lang/rust.vim'
@@ -199,6 +210,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'dstein64/vim-startuptime'
 
 call plug#end()
+
 " }}} End Vim-Plug Settings
 
 lua require'spaceline'
@@ -301,23 +313,6 @@ endif
 " lsp diagnostic color
 highlight LspDiagnosticsVirtualTextError guifg=#FFA500
 highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
-" change inlay hint color
-highlight! link CocHintSign Comment
-
-" skip over closing parenthesis
-"inoremap <expr> <Tab> stridx('])}"', getline('.')[col('.')-1])==-1 ?
-"    \ "\t" : "\<Right>"
-
-" termdebug setting
-packadd termdebug
-  let g:termdebug_wide=1
-  nnoremap <F5> :silent! Termdebug<CR>
-  nnoremap <Leader><F5> :Run<CR>
-  nnoremap <F6> :Step<CR>
-  nnoremap <Leader><F6> :Over<CR>
-  nnoremap <F7> :Continue<CR>
-  nnoremap <F9> :Break<CR>
-  nnoremap <F10> :Stop<CR>
 
 " resize split window
 nnoremap <C-W><C-h> :vertical resize -5<CR>

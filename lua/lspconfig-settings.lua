@@ -1,11 +1,34 @@
-local nvim_lsp = require('lspconfig')
+local lspconfig = require'lspconfig'
+local configs = require'lspconfig/configs'
 
-nvim_lsp.bashls.setup{}
-nvim_lsp.clangd.setup{}
-nvim_lsp.cmake.setup{}
-nvim_lsp.rust_analyzer.setup{}
-nvim_lsp.tsserver.setup{}
-nvim_lsp.vimls.setup{}
+lspconfig.bashls.setup{}
+lspconfig.clangd.setup{}
+lspconfig.cmake.setup{}
+lspconfig.rust_analyzer.setup{}
+lspconfig.tsserver.setup{}
+lspconfig.vimls.setup{}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.html.setup {
+  capabilities = capabilities,
+}
+
+if not lspconfig.emmet_ls then
+  configs.emmet_ls = {
+    default_config = {
+      cmd = {'emmet-ls', '--stdio'};
+      filetypes = {'html', 'css'};
+      root_dir = function(fname)
+        return vim.loop.cwd()
+      end;
+      settings = {};
+    };
+  }
+end
+
+lspconfig.emmet_ls.setup{ capabilities = capabilities; }
 
 require'compe'.setup {
   enabled = true;
