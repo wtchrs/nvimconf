@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
   set omnifunc=v:lua.vim.lsp.omnifunc
+Plug 'kabouzeid/nvim-lspinstall'
 
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
@@ -311,8 +312,8 @@ endif
 " No background color for transparency
 "highlight Normal guibg=NONE ctermbg=NONE
 " lsp diagnostic color
-highlight LspDiagnosticsVirtualTextError guifg=#FFA500
-highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
+"highlight LspDiagnosticsVirtualTextError guifg=#FFA500
+"highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
 
 " resize split window
 nnoremap <C-W><C-h> :vertical resize -5<CR>

@@ -1,26 +1,13 @@
 local lspconfig = require'lspconfig'
 local configs = require'lspconfig/configs'
-
-lspconfig.bashls.setup{}
-lspconfig.clangd.setup{}
-lspconfig.cmake.setup{}
-lspconfig.rust_analyzer.setup{}
-lspconfig.tsserver.setup{}
-lspconfig.vimls.setup{}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-lspconfig.html.setup {
-  capabilities = capabilities,
-}
+local lspinstall = require'lspinstall'
 
 if not lspconfig.emmet_ls then
   configs.emmet_ls = {
     default_config = {
       cmd = {'emmet-ls', '--stdio'};
       filetypes = {'html', 'css'};
-      root_dir = function(fname)
+      root_dir = function(_)
         return vim.loop.cwd()
       end;
       settings = {};
@@ -28,7 +15,62 @@ if not lspconfig.emmet_ls then
   }
 end
 
-lspconfig.emmet_ls.setup{ capabilities = capabilities; }
+-- config that activates keymaps and enables snippet support
+local function make_config()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  return {
+    -- enable snippet support
+    capabilities = capabilities,
+  }
+end
+
+-- lsp-install
+local function setup_servers()
+  lspinstall.setup()
+
+  -- Install missing servers
+  local required_servers = { "lua", "cmake", "cpp", "bash", "css", "html", "typescript", "vim" }
+  local installed_servers = lspinstall.installed_servers()
+  for _, server in pairs(required_servers) do
+    if not vim.tbl_contains(installed_servers, server) then
+      lspinstall.install_server(server)
+    end
+  end
+
+  -- get all installed servers
+  local servers = lspinstall.installed_servers()
+  -- manually installed servers
+  table.insert(servers, "emmet_ls")
+
+  for _, server in pairs(servers) do
+    local config = make_config()
+
+    -- language specific config
+    if server == "lua" then
+      config.settings = {
+        Lua = {
+          diagnostics = {
+              globals = { 'vim' }
+          }
+        }
+      }
+    end
+    if server == "clangd" then
+      config.filetypes = {"c", "cpp"};
+    end
+
+    lspconfig[server].setup(config)
+  end
+end
+
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+lspinstall.post_install_hook = function ()
+  setup_servers() -- reload installed servers
+  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
 
 require'compe'.setup {
   enabled = true;
@@ -54,7 +96,7 @@ require'compe'.setup {
   };
 }
 
-require('lspkind').init({})
+require'lspkind'.init{}
 
 require'lspsaga'.init_lsp_saga{
 	code_action_prompt = {
