@@ -65,6 +65,9 @@ Plug 'glepnir/lspsaga.nvim'
   nnoremap <silent> [g :Lspsaga diagnostic_jump_prev<CR>
   nnoremap <silent> ]g :Lspsaga diagnostic_jump_next<CR>
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'p00f/nvim-ts-rainbow'
+
 Plug 'preservim/nerdcommenter'
   let g:NERDCreateDefaultMappings = 0
   let g:NERDDefaultAlign = 'left'
@@ -123,8 +126,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
   let g:nvim_tree_side = 'right'
   let g:nvim_tree_width = 35
-  "let g:nvim_tree_auto_open = 1
   let g:nvim_tree_auto_close = 1
+  let g:nvim_tree_quit_on_open = 1
   let g:nvim_tree_follow = 1
   let g:nvim_tree_indent_markers = 1
   let g:nvim_tree_git_hl = 1
@@ -145,7 +148,9 @@ Plug 'akinsho/nvim-bufferline.lua'
   nnoremap <silent> <A-c> :bdelete<CR>
 
 " Vim Theme
-Plug 'arcticicestudio/nord-vim'
+"Plug 'arcticicestudio/nord-vim'
+Plug 'shaunsingh/nord.nvim'
+  let g:nord_borders = v:true
 
 Plug 'mattn/emmet-vim'
   let g:user_emmet_leader_key = ','
@@ -214,12 +219,14 @@ call plug#end()
 
 " }}} End Vim-Plug Settings
 
+set background=dark
+"colorscheme nord
+lua require('nord').set()
+
 lua require'spaceline'
 lua require'lspconfig-settings'
 lua require'bufln'
 
-set background=dark
-colorscheme nord
 
 set number
 set ruler
@@ -284,6 +291,7 @@ augroup NewBuffer
       \ if line("'\"") > 0 && line("'\"") <= line("$") |
       \   exe "norm g`\"" |
       \ endif
+  "autocmd BufReadPost * highlight BufferLineFill guibg=#191c23
 augroup END
 
 augroup DisableWrapFT
@@ -298,7 +306,7 @@ augroup END
 
 augroup file_type
   autocmd!
-  autocmd FileType vim,sh,zsh,html,lua setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,sh,zsh,html,javascript,lua setlocal shiftwidth=2 tabstop=2
   autocmd FileType help,h wincmd L
 augroup END
 
@@ -314,6 +322,7 @@ endif
 " lsp diagnostic color
 "highlight LspDiagnosticsVirtualTextError guifg=#FFA500
 "highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
+"highlight BufferLineFill guibg=#191c23
 
 " resize split window
 nnoremap <C-W><C-h> :vertical resize -5<CR>
