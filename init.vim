@@ -110,6 +110,8 @@ Plug 'Raimondi/delimitMate'
   let delimitMate_expand_cr=1
   let delimitMate_expand_space=1
 
+Plug 'blackcauldron7/surround.nvim'
+
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'glepnir/galaxyline.nvim'
 Plug 'glepnir/dashboard-nvim'
@@ -196,6 +198,9 @@ Plug 'easymotion/vim-easymotion'
 Plug 'lukas-reineke/indent-blankline.nvim'
   let g:indent_blankline_char = '│'
   let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'json']
+  let g:indent_blankline_use_treesitter = v:true
+  let g:indent_blankline_show_current_context = v:true
+  let g:indent_blankline_show_trailing_blankline_indent = v:false
 
 " Rust, Crates, Toml
 Plug 'rust-lang/rust.vim'
@@ -222,6 +227,8 @@ call plug#end()
 set background=dark
 "colorscheme nord
 lua require('nord').set()
+
+lua require'surround'.setup{}
 
 lua require'spaceline'
 lua require'lspconfig-settings'
@@ -266,6 +273,8 @@ set updatetime=300
 set signcolumn=yes
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
+
+filetype plugin indent on
 
 " Preview replace
 if has('nvim')
@@ -316,13 +325,11 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-" Change Color Highlight
 " No background color for transparency
 "highlight Normal guibg=NONE ctermbg=NONE
-" lsp diagnostic color
-"highlight LspDiagnosticsVirtualTextError guifg=#FFA500
-"highlight LspDiagnosticsVirtualTextWarning guifg=#FFA500
-"highlight BufferLineFill guibg=#191c23
+
+" indent-blankline current context highlight
+highlight IndentBlanklineContextChar guifg=#5d6678 gui=nocombine
 
 " resize split window
 nnoremap <C-W><C-h> :vertical resize -5<CR>
