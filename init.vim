@@ -120,7 +120,7 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-  nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+  nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files({ hidden = true })<cr>
   nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
   nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
   nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
@@ -148,6 +148,9 @@ Plug 'akinsho/nvim-bufferline.lua'
   nnoremap <silent> <A-8> :lua require"bufferline".go_to_buffer(8)<CR>
   " Close buffer
   nnoremap <silent> <A-c> :bdelete<CR>
+  " Move buffer
+  nnoremap <silent> <A-l> :BufferLineMoveNext<CR>
+  nnoremap <silent> <A-h> :BufferLineMovePrev<CR>
 
 " Vim Theme
 "Plug 'arcticicestudio/nord-vim'
@@ -197,7 +200,7 @@ Plug 'easymotion/vim-easymotion'
 
 Plug 'lukas-reineke/indent-blankline.nvim'
   let g:indent_blankline_char = '│'
-  let g:indent_blankline_filetype_exclude = ['help', 'dashboard', 'json']
+  let g:indent_blankline_filetype_exclude = ['help', 'dashboard']
   let g:indent_blankline_use_treesitter = v:true
   let g:indent_blankline_show_current_context = v:true
   let g:indent_blankline_show_trailing_blankline_indent = v:false
@@ -219,6 +222,7 @@ Plug 'dag/vim-fish'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'airblade/vim-gitgutter'
 Plug 'dstein64/vim-startuptime'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 call plug#end()
 
@@ -231,8 +235,9 @@ lua require('nord').set()
 lua require'surround'.setup{}
 
 lua require'spaceline'
-lua require'lspconfig-settings'
+lua require'lsp'
 lua require'bufln'
+lua require'telescope-config'
 
 
 set number
@@ -315,7 +320,7 @@ augroup END
 
 augroup file_type
   autocmd!
-  autocmd FileType vim,sh,zsh,html,javascript,lua setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,sh,zsh,html,javascript,json,lua setlocal shiftwidth=2 tabstop=2
   autocmd FileType help,h wincmd L
 augroup END
 
