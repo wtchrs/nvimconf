@@ -66,6 +66,10 @@ Plug 'glepnir/lspsaga.nvim'
   nnoremap <silent> ]g :Lspsaga diagnostic_jump_next<CR>
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  augroup TreesitterFT
+    autocmd!
+    autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
+  augroup END
 Plug 'p00f/nvim-ts-rainbow'
 
 Plug 'preservim/nerdcommenter'
@@ -73,13 +77,6 @@ Plug 'preservim/nerdcommenter'
   let g:NERDDefaultAlign = 'left'
   nmap <Leader>/ <Plug>NERDCommenterToggle
   xmap <Leader>/ <Plug>NERDCommenterToggle
-
-Plug 'preservim/tagbar'
-  nnoremap <F8> :TagbarToggle<CR>
-
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"  exec 'source '.stdpath('config').'\coc-settings.vim'
-"Plug 'tjdevries/coc-zsh'
 
 Plug 'dense-analysis/ale'
   let g:ale_linters = {
@@ -153,7 +150,6 @@ Plug 'akinsho/nvim-bufferline.lua'
   nnoremap <silent> <A-h> :BufferLineMovePrev<CR>
 
 " Vim Theme
-"Plug 'arcticicestudio/nord-vim'
 Plug 'shaunsingh/nord.nvim'
   let g:nord_borders = v:true
 
@@ -165,37 +161,14 @@ Plug 'mattn/emmet-vim'
     autocmd FileType html,css EmmetInstall
   augroup END
 
-Plug 'junegunn/rainbow_parentheses.vim'
-  let g:rainbow#max_level = 16
-  let g:rainbow#pairs = [['(', ')'], ['{', '}'], ['[', ']']]
-  augroup RainbowParenthesesSetting
-    autocmd!
-    " cmake syntax highlight conflict with RainbowParentheses
-    let ftToDisableRainbow = ['cmake']
-    autocmd BufEnter *
-        \ if index(ftToDisableRainbow, &ft) < 0 |
-        \   RainbowParentheses |
-        \ else |
-        \   RainbowParentheses! |
-        \ endif
-    autocmd TermOpen,TermEnter * RainbowParentheses!
-  augroup END
-
 Plug 'liuchengxu/vista.vim'
   let g:vista_icon_indent = ['╰─▸ ', '├─▸ ']
-  let g:vista_executive_for = {
-      \ 'vim': 'ctags',
-      \ 'cpp': 'coc',
-      \ 'rust': 'coc',
-      \ 'javascript': 'coc',
-      \ 'html': 'coc',
-      \ 'haskell': 'coc'
-      \ }
+  let g:vista_close_on_jump = 1
+  let g:vista_default_executive = 'nvim_lsp'
   let g:vista_update_on_text_changed = 1
   let g:vista_update_on_text_changed_delay = 3000
-  nmap <Leader><F8> :Vista!!<CR>
+  nmap <silent> <F8> :Vista!!<CR>
 
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'easymotion/vim-easymotion'
 
 Plug 'lukas-reineke/indent-blankline.nvim'
@@ -205,21 +178,8 @@ Plug 'lukas-reineke/indent-blankline.nvim'
   let g:indent_blankline_show_current_context = v:true
   let g:indent_blankline_show_trailing_blankline_indent = v:false
 
-" Rust, Crates, Toml
-Plug 'rust-lang/rust.vim'
-Plug 'arzg/vim-rust-syntax-ext'
-Plug 'cespare/vim-toml'
-Plug 'mhinz/vim-crates'
-  augroup CratesHighlight
-    autocmd!
-    if has('nvim')
-      autocmd BufRead Cargo.toml call crates#toggle()
-    endif
-  augroup END
-
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
-Plug 'dag/vim-fish'
-Plug 'pboettch/vim-cmake-syntax'
+"Plug 'pboettch/vim-cmake-syntax'
 Plug 'airblade/vim-gitgutter'
 Plug 'dstein64/vim-startuptime'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
@@ -228,18 +188,18 @@ call plug#end()
 
 " }}} End Vim-Plug Settings
 
-set background=dark
-"colorscheme nord
+" Color Theme
 lua require('nord').set()
 
+" Galaxyline Theme
+lua require'spaceline'
+
+lua require'lsp'
+lua require'bufferline-config'
+lua require'telescope-config'
 lua require'surround'.setup{}
 
-lua require'spaceline'
-lua require'lsp'
-lua require'bufln'
-lua require'telescope-config'
-
-
+set background=dark
 set number
 set ruler
 set title
@@ -295,10 +255,6 @@ if has('syntax')
   syntax on
 endif
 
-if &shell =~# 'fish$'
-  set shell=sh
-endif
-
 augroup NewBuffer
   autocmd!
   autocmd BufReadPost *
@@ -320,7 +276,7 @@ augroup END
 
 augroup file_type
   autocmd!
-  autocmd FileType vim,sh,zsh,html,javascript,json,lua setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,sh,zsh,html,javascript,json,jsonc,lua setlocal shiftwidth=2 tabstop=2
   autocmd FileType help,h wincmd L
 augroup END
 

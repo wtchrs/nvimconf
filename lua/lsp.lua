@@ -108,7 +108,15 @@ require'lspsaga'.init_lsp_saga{
 }
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "bash", "cpp", "cmake", "comment", "lua", "css", "html", "javascript", "typescript", "json" },
+  ensure_installed = {
+    "bash",
+    "cpp", "cmake",
+    "comment",
+    "lua",
+    "css", "html",
+    "javascript", "typescript",
+    "json", "jsonc"
+  },
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = false,
