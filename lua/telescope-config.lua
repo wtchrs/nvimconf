@@ -19,13 +19,13 @@ require('telescope').setup{
         preview_width = 0.6,
       }
     },
-    file_ignore_patterns = { ".git/", "node_modules/", ".yarn/" },
+    file_ignore_patterns = { '.git/', 'node_modules/', '.yarn/' },
     winblend = 10,
     mappings = {
       i = {
-        ["<esc>"] = actions.close,
-        ["<C-j>"] = actions.move_selection_next,
-        ["<C-k>"] = actions.move_selection_previous,
+        ['<esc>'] = actions.close,
+        ['<C-j>'] = actions.move_selection_next,
+        ['<C-k>'] = actions.move_selection_previous,
       },
     },
   }

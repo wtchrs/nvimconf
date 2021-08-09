@@ -11,7 +11,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
 " After installing Vim-Plug, execute ':PlugInstall' to install plugins.
 
 call plug#begin('~/.vim/plugged')
@@ -78,30 +77,38 @@ Plug 'preservim/nerdcommenter'
   nmap <Leader>/ <Plug>NERDCommenterToggle
   xmap <Leader>/ <Plug>NERDCommenterToggle
 
-Plug 'dense-analysis/ale'
-  let g:ale_linters = {
-      \ 'c': ['clangd'],
-      \ 'cpp': ['clangd'],
-      \ }
-  let g:ale_fixers = {
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \ 'sh': ['shfmt'],
-      \ 'c': ['clang-format'],
-      \ 'cpp': ['clang-format'],
-      \ 'cmake': [],
-      \ 'html': ['prettier'],
-      \ 'haskell': ['brittany']
-      \ }
-  let g:ale_fix_on_save = 1
-  let g:ale_lint_delay = 1000
-  let g:ale_echo_msg_error_str = 'E'
-  let g:ale_echo_msg_warning_str = 'W'
-  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-  " change ALEWarning color
-  highlight SpellCap gui=underline cterm=underline guibg=NONE ctermbg=NONE
-  " jump to diagnostic
-  nmap <silent> [a <Plug>(ale_previous_wrap)
-  nmap <silent> ]a <Plug>(ale_next_wrap)
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+
+Plug 'folke/trouble.nvim'
+  nmap <Leader>t <cmd>TroubleToggle<CR>
+
+"Plug 'dense-analysis/ale'
+"  let g:ale_linters = {
+"      \ 'c': ['clangd'],
+"      \ 'cpp': ['clangd'],
+"      \ 'typescript': []
+"      \ }
+"  let g:ale_fixers = {
+"      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+"      \ 'sh': ['shfmt'],
+"      \ 'c': ['clang-format'],
+"      \ 'cpp': ['clang-format'],
+"      \ 'cmake': [],
+"      \ 'html': ['prettier'],
+"      \ 'typescript': ['prettier'],
+"      \ 'haskell': ['brittany']
+"      \ }
+"  let g:ale_fix_on_save = 1
+"  let g:ale_lint_delay = 1000
+"  let g:ale_echo_msg_error_str = 'E'
+"  let g:ale_echo_msg_warning_str = 'W'
+"  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"  " change ALEWarning color
+"  highlight SpellCap gui=underline cterm=underline guibg=NONE ctermbg=NONE
+"  " jump to diagnostic
+"  nmap <silent> [a <Plug>(ale_previous_wrap)
+"  nmap <silent> ]a <Plug>(ale_next_wrap)
 
 Plug 'Raimondi/delimitMate'
   let delimitMate_expand_cr=1
@@ -135,14 +142,14 @@ Plug 'kyazdani42/nvim-tree.lua'
   nnoremap <leader>n :NvimTreeFindFile<CR>
 
 Plug 'akinsho/nvim-bufferline.lua'
-  nnoremap <silent> <A-1> :lua require"bufferline".go_to_buffer(1)<CR>
-  nnoremap <silent> <A-2> :lua require"bufferline".go_to_buffer(2)<CR>
-  nnoremap <silent> <A-3> :lua require"bufferline".go_to_buffer(3)<CR>
-  nnoremap <silent> <A-4> :lua require"bufferline".go_to_buffer(4)<CR>
-  nnoremap <silent> <A-5> :lua require"bufferline".go_to_buffer(5)<CR>
-  nnoremap <silent> <A-6> :lua require"bufferline".go_to_buffer(6)<CR>
-  nnoremap <silent> <A-7> :lua require"bufferline".go_to_buffer(7)<CR>
-  nnoremap <silent> <A-8> :lua require"bufferline".go_to_buffer(8)<CR>
+  nnoremap <silent> <A-1> :lua require('bufferline').go_to_buffer(1)<CR>
+  nnoremap <silent> <A-2> :lua require('bufferline').go_to_buffer(2)<CR>
+  nnoremap <silent> <A-3> :lua require('bufferline').go_to_buffer(3)<CR>
+  nnoremap <silent> <A-4> :lua require('bufferline').go_to_buffer(4)<CR>
+  nnoremap <silent> <A-5> :lua require('bufferline').go_to_buffer(5)<CR>
+  nnoremap <silent> <A-6> :lua require('bufferline').go_to_buffer(6)<CR>
+  nnoremap <silent> <A-7> :lua require('bufferline').go_to_buffer(7)<CR>
+  nnoremap <silent> <A-8> :lua require('bufferline').go_to_buffer(8)<CR>
   " Close buffer
   nnoremap <silent> <A-c> :bdelete<CR>
   " Move buffer
@@ -180,7 +187,7 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 "Plug 'pboettch/vim-cmake-syntax'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'dstein64/vim-startuptime'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
@@ -192,12 +199,13 @@ call plug#end()
 lua require('nord').set()
 
 " Galaxyline Theme
-lua require'spaceline'
+lua require('spaceline')
 
-lua require'lsp'
-lua require'bufferline-config'
-lua require'telescope-config'
-lua require'surround'.setup{}
+lua require('lsp')
+lua require('bufferline-config')
+lua require('telescope-config')
+lua require('surround').setup{}
+lua require('gitsigns').setup{}
 
 set background=dark
 set number

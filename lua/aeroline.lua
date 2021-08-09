@@ -223,11 +223,11 @@ gls.left[11] = {
 }
 
 gls.left[12] = {
-    TrailingWhiteSpace = {
-     provider = TrailingWhiteSpace,
-     icon = '   ',
-     highlight = {colors.yellow,colors.bg},
-    }
+  TrailingWhiteSpace = {
+    provider = TrailingWhiteSpace,
+    icon = '   ',
+    highlight = {colors.yellow,colors.bg},
+  }
 }
 
 gls.left[13] = {

@@ -133,25 +133,37 @@ gls.left[10] = {
   LeftEnd = {
     provider = function() return '' end,
     highlight = {colors.purple,colors.bg},
+    separator = ' ',
+    separator_highlight = {colors.bg,colors.bg},
   }
 }
 gls.left[11] = {
-  DiagnosticError = {
-    provider = 'DiagnosticError',
-    icon = '  ',
-    highlight = {colors.red,colors.bg}
+  ShowLspClient = {
+    provider = 'GetLspClient',
+    condition = function ()
+      local tbl = {['dashboard'] = true,['']=true}
+      if tbl[vim.bo.filetype] then
+        return false
+      end
+      return true
+    end,
+    separator = ' ',
+    separator_highlight = {colors.bg,colors.bg},
+    icon = ' LSP:',
+    highlight = {colors.purple,colors.bg,'bold'},
   }
 }
 gls.left[12] = {
-  Space = {
-    provider = function () return ' ' end,
-    highlight = {colors.bg,colors.bg}
+  DiagnosticError = {
+    provider = 'DiagnosticError',
+    icon = ' ',
+    highlight = {colors.red,colors.bg},
   }
 }
 gls.left[13] = {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
-    icon = '  ',
+    icon = ' ',
     highlight = {colors.blue,colors.bg},
   }
 }
