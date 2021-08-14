@@ -27,8 +27,7 @@ Plug 'hrsh7th/nvim-compe'
   inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
   inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
   " Tab to completion and skip over closing parenthesis
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" : SkipClosingParentheses()
+  inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : SkipClosingParentheses()
   inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
   function! SkipClosingParentheses()
@@ -45,24 +44,24 @@ Plug 'hrsh7th/nvim-compe'
 
 Plug 'glepnir/lspsaga.nvim'
   " lsp provider to find the cursor word definition and reference
-  nnoremap <silent> gh :Lspsaga lsp_finder<CR>
+  nnoremap <silent> gh <cmd>Lspsaga lsp_finder<CR>
   " code action
-  nnoremap <silent> <leader>ca :Lspsaga code_action<CR>
-  vnoremap <silent> <leader>ca :<C-U>Lspsaga range_code_action<CR>
+  nnoremap <silent> <leader>ca <cmd>Lspsaga code_action<CR>
+  vnoremap <silent> <leader>ca <cmd><C-U>Lspsaga range_code_action<CR>
   " show hover doc
-  nnoremap <silent> K :Lspsaga hover_doc<CR>
+  nnoremap <silent> K <cmd>Lspsaga hover_doc<CR>
   " scroll hover doc or scroll in definition preview
   nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
   nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
   " rename symbol
-  nnoremap <silent> <leader>rn :Lspsaga rename<CR>
+  nnoremap <silent> <leader>rn <cmd>Lspsaga rename<CR>
   " preview definition
-  nnoremap <silent> gd :Lspsaga preview_definition<CR>
+  nnoremap <silent> gd <cmd>Lspsaga preview_definition<CR>
   " show signature help
-  nnoremap <silent> gs :Lspsaga signature_help<CR>
+  nnoremap <silent> gs <cmd>Lspsaga signature_help<CR>
   " jump diagnostics
-  nnoremap <silent> [g :Lspsaga diagnostic_jump_prev<CR>
-  nnoremap <silent> ]g :Lspsaga diagnostic_jump_next<CR>
+  nnoremap <silent> [g <cmd>Lspsaga diagnostic_jump_prev<CR>
+  nnoremap <silent> ]g <cmd>Lspsaga diagnostic_jump_next<CR>
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   augroup TreesitterFT
@@ -77,38 +76,37 @@ Plug 'preservim/nerdcommenter'
   nmap <Leader>/ <Plug>NERDCommenterToggle
   xmap <Leader>/ <Plug>NERDCommenterToggle
 
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-
 Plug 'folke/trouble.nvim'
   nmap <Leader>t <cmd>TroubleToggle<CR>
 
-"Plug 'dense-analysis/ale'
-"  let g:ale_linters = {
-"      \ 'c': ['clangd'],
-"      \ 'cpp': ['clangd'],
-"      \ 'typescript': []
-"      \ }
-"  let g:ale_fixers = {
-"      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-"      \ 'sh': ['shfmt'],
-"      \ 'c': ['clang-format'],
-"      \ 'cpp': ['clang-format'],
-"      \ 'cmake': [],
-"      \ 'html': ['prettier'],
-"      \ 'typescript': ['prettier'],
-"      \ 'haskell': ['brittany']
-"      \ }
-"  let g:ale_fix_on_save = 1
-"  let g:ale_lint_delay = 1000
-"  let g:ale_echo_msg_error_str = 'E'
-"  let g:ale_echo_msg_warning_str = 'W'
-"  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-"  " change ALEWarning color
-"  highlight SpellCap gui=underline cterm=underline guibg=NONE ctermbg=NONE
-"  " jump to diagnostic
-"  nmap <silent> [a <Plug>(ale_previous_wrap)
-"  nmap <silent> ]a <Plug>(ale_next_wrap)
+Plug 'dense-analysis/ale'
+  let g:ale_linters = {
+      \ 'c': ['clangd'],
+      \ 'cpp': ['clangd'],
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['eslint']
+      \ }
+  let g:ale_fixers = {
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'sh': ['shfmt'],
+      \ 'c': ['clang-format'],
+      \ 'cpp': ['clang-format'],
+      \ 'cmake': [],
+      \ 'html': ['prettier'],
+      \ 'javascript': ['prettier'],
+      \ 'typescript': ['prettier'],
+      \ 'haskell': ['brittany']
+      \ }
+  let g:ale_fix_on_save = 1
+  let g:ale_lint_delay = 1000
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  " change ALEWarning color
+  highlight SpellCap gui=underline cterm=underline guibg=NONE ctermbg=NONE
+  " jump to diagnostic
+  nmap <silent> [a <Plug>(ale_previous_wrap)
+  nmap <silent> ]a <Plug>(ale_next_wrap)
 
 Plug 'Raimondi/delimitMate'
   let delimitMate_expand_cr=1
@@ -124,10 +122,6 @@ Plug 'glepnir/dashboard-nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-  nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files({ hidden = true })<cr>
-  nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-  nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-  nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 Plug 'kyazdani42/nvim-tree.lua'
   let g:nvim_tree_side = 'right'
@@ -142,19 +136,6 @@ Plug 'kyazdani42/nvim-tree.lua'
   nnoremap <leader>n :NvimTreeFindFile<CR>
 
 Plug 'akinsho/nvim-bufferline.lua'
-  nnoremap <silent> <A-1> :lua require('bufferline').go_to_buffer(1)<CR>
-  nnoremap <silent> <A-2> :lua require('bufferline').go_to_buffer(2)<CR>
-  nnoremap <silent> <A-3> :lua require('bufferline').go_to_buffer(3)<CR>
-  nnoremap <silent> <A-4> :lua require('bufferline').go_to_buffer(4)<CR>
-  nnoremap <silent> <A-5> :lua require('bufferline').go_to_buffer(5)<CR>
-  nnoremap <silent> <A-6> :lua require('bufferline').go_to_buffer(6)<CR>
-  nnoremap <silent> <A-7> :lua require('bufferline').go_to_buffer(7)<CR>
-  nnoremap <silent> <A-8> :lua require('bufferline').go_to_buffer(8)<CR>
-  " Close buffer
-  nnoremap <silent> <A-c> :bdelete<CR>
-  " Move buffer
-  nnoremap <silent> <A-l> :BufferLineMoveNext<CR>
-  nnoremap <silent> <A-h> :BufferLineMovePrev<CR>
 
 " Vim Theme
 Plug 'shaunsingh/nord.nvim'
@@ -173,7 +154,7 @@ Plug 'liuchengxu/vista.vim'
   let g:vista_close_on_jump = 1
   let g:vista_default_executive = 'nvim_lsp'
   let g:vista_update_on_text_changed = 1
-  let g:vista_update_on_text_changed_delay = 3000
+  let g:vista_update_on_text_changed_delay = 2000
   nmap <silent> <F8> :Vista!!<CR>
 
 Plug 'easymotion/vim-easymotion'
@@ -202,8 +183,8 @@ lua require('nord').set()
 lua require('spaceline')
 
 lua require('lsp')
-lua require('bufferline-config')
-lua require('telescope-config')
+lua require('plugins.bufferline')
+lua require('plugins.telescope')
 lua require('surround').setup{}
 lua require('gitsigns').setup{}
 
@@ -269,7 +250,6 @@ augroup NewBuffer
       \ if line("'\"") > 0 && line("'\"") <= line("$") |
       \   exe "norm g`\"" |
       \ endif
-  "autocmd BufReadPost * highlight BufferLineFill guibg=#191c23
 augroup END
 
 augroup DisableWrapFT
@@ -284,8 +264,16 @@ augroup END
 
 augroup file_type
   autocmd!
-  autocmd FileType vim,sh,zsh,html,javascript,json,jsonc,lua setlocal shiftwidth=2 tabstop=2
+  let ftToUseTwoSpaceTab = [
+      \ 'vim', 'lua', 'sh', 'zsh',
+      \ 'html', 'javascript', 'typescript', 'json', 'jsonc',
+      \ ]
+  autocmd BufEnter *
+      \ if !(index(ftToUseTwoSpaceTab, &ft) < 0) |
+      \   setlocal shiftwidth=2 tabstop=2 |
+      \ endif
   autocmd FileType help,h wincmd L
+  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html
 augroup END
 
 if exists('+termguicolors')

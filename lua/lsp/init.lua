@@ -1,25 +1,6 @@
 local lspconfig = require('lspconfig')
 local configs = require('lspconfig/configs')
 local lspinstall = require('lspinstall')
-local null_ls = require('null-ls')
-
-local sources = {
-  null_ls.builtins.formatting.prettier.with({
-    command = 'npx',
-    args = { "prettier", "--stdin-filepath", "$FILENAME" }
-  }),
-  null_ls.builtins.diagnostics.eslint.with({
-    command = 'npx',
-    args = { "eslint", "-f", "json", "--stdin", "--stdin-filename", "$FILENAME" }
-  })
-}
-
-null_ls.config({
-  diagnostics_format = "[#{c}] #{m} (#{s})",
-  debounce = 1000,
-  save_after_format = true,
-  sources = sources,
-})
 
 if not lspconfig.emmet_ls then
   configs.emmet_ls = {
@@ -46,7 +27,9 @@ end
 local function setup_servers()
   lspinstall.setup()
 
-  local required_servers = { 'lua', 'cmake', 'cpp', 'bash', 'css', 'html', 'typescript', 'vim' }
+  local required_servers = {
+    'lua', 'cmake', 'cpp', 'bash', 'css', 'html', 'typescript', 'vim'
+  }
   local installed_servers = lspinstall.installed_servers()
   for _, server in pairs(required_servers) do
     if not vim.tbl_contains(installed_servers, server) then
@@ -56,7 +39,6 @@ local function setup_servers()
 
   local servers = lspinstall.installed_servers()
   table.insert(servers, 'emmet_ls')
-  table.insert(servers, 'null-ls')
 
   for _, server in pairs(servers) do
     local config = make_config()
@@ -72,19 +54,6 @@ local function setup_servers()
     end
     if server == 'clangd' then
       config.filetypes = {'c', 'cpp'};
-    end
-    if server == 'typescript' then
-      config.on_attach = function (client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-
-        local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup({
-          eslint_enable_diagnostics = true,
-        })
-        ts_utils.setup_client(client)
-
-        vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
-      end
     end
 
     lspconfig[server].setup(config)
@@ -119,6 +88,7 @@ require('compe').setup {
     nvim_lsp = true;
     nvim_lua = true;
     vsnip = true;
+    luasnip = true;
   };
 }
 
