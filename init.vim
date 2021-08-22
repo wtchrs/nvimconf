@@ -67,6 +67,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   augroup TreesitterFT
     autocmd!
     autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
+    autocmd BufNewFile,BufRead *.hbs setlocal filetype=html
   augroup END
 Plug 'p00f/nvim-ts-rainbow'
 
@@ -146,7 +147,7 @@ Plug 'mattn/emmet-vim'
   let g:user_emmet_install_global = 0
   augroup emmet
     autocmd!
-    autocmd FileType html,css EmmetInstall
+    autocmd FileType html,css,handlebars,html.handlebars EmmetInstall
   augroup END
 
 Plug 'liuchengxu/vista.vim'
@@ -171,6 +172,9 @@ Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'dstein64/vim-startuptime'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+
+"Plug 'joukevandermaas/vim-ember-hbs'
 
 call plug#end()
 
@@ -273,7 +277,7 @@ augroup file_type
       \   setlocal shiftwidth=2 tabstop=2 |
       \ endif
   autocmd FileType help,h wincmd L
-  autocmd BufNewFile,BufRead *.hbs setlocal filetype=html
+  autocmd BufNewFile,BufRead .prettierrc setlocal filetype=json
 augroup END
 
 if exists('+termguicolors')
