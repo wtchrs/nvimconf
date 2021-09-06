@@ -39,6 +39,7 @@ local function setup_servers()
 
   local servers = lspinstall.installed_servers()
   table.insert(servers, 'emmet_ls')
+  table.insert(servers, 'rust_analyzer')
 
   for _, server in pairs(servers) do
     local config = make_config()
@@ -111,7 +112,8 @@ require('nvim-treesitter.configs').setup {
     'lua',
     'css', 'html',
     'javascript', 'typescript',
-    'json', 'jsonc'
+    'json', 'jsonc',
+    'rust'
   },
   highlight = {
     enable = true,
@@ -127,7 +129,8 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
-require("trouble").setup {}
+require('trouble').setup({})
+require('lsp.rust')
 
 -- Highlighting symbols under cursor
 vim.cmd([[augroup HiSymbols]])

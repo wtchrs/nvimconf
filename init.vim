@@ -71,8 +71,24 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   augroup END
 Plug 'p00f/nvim-ts-rainbow'
 
+" Rust, Crates, Toml
+Plug 'simrat39/rust-tools.nvim'
+Plug 'rust-lang/rust.vim'
+Plug 'arzg/vim-rust-syntax-ext'
+Plug 'cespare/vim-toml'
+Plug 'mhinz/vim-crates'
+  augroup CratesHighlight
+    autocmd!
+    if has('nvim')
+      autocmd BufRead Cargo.toml call crates#toggle()
+    endif
+  augroup END
+
+Plug 'mfussenegger/nvim-dap'
+
 Plug 'preservim/nerdcommenter'
   let g:NERDCreateDefaultMappings = 0
+  let g:NERDSpaceDelims = 1
   let g:NERDDefaultAlign = 'left'
   nmap <Leader>/ <Plug>NERDCommenterToggle
   xmap <Leader>/ <Plug>NERDCommenterToggle
@@ -96,6 +112,7 @@ Plug 'dense-analysis/ale'
       \ 'html': ['prettier'],
       \ 'javascript': ['prettier'],
       \ 'typescript': ['prettier'],
+      \ 'rust': ['rustfmt'],
       \ 'haskell': ['brittany']
       \ }
   let g:ale_fix_on_save = 1
@@ -189,8 +206,8 @@ lua require('spaceline')
 lua require('lsp')
 lua require('plugins.bufferline')
 lua require('plugins.telescope')
-lua require('surround').setup{}
-lua require('gitsigns').setup{}
+lua require('surround').setup({})
+lua require('gitsigns').setup({})
 
 set background=dark
 set number
@@ -247,6 +264,8 @@ endif
 if has('syntax')
   syntax on
 endif
+
+vmap <C-c> y:call system("xclip -i -selection clipboard", getreg("\""))<CR>
 
 augroup NewBuffer
   autocmd!
