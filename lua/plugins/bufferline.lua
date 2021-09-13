@@ -3,8 +3,9 @@ local bufferline = require('bufferline')
 -- Bufferline Settings
 bufferline.setup {
   options = {
-    numbers = 'ordinal',
-    number_style = '',
+    numbers = function(opts)
+      return string.format('%s.', opts.ordinal)
+    end,
     max_name_length = 18,
     max_prefix_length = 13,
     tab_size = 18,
