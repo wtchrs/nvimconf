@@ -1,7 +1,9 @@
 set encoding=UTF-8
 scriptencoding UTF-8
 
-let mapleader='`'
+" Use space bar as leader
+noremap <space> <nop>
+let mapleader=' '
 
 " Vim-Plug Settings {{{
 
@@ -143,10 +145,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'kyazdani42/nvim-tree.lua'
   let g:nvim_tree_side = 'right'
-  let g:nvim_tree_width = 35
-  let g:nvim_tree_auto_close = 1
   let g:nvim_tree_quit_on_open = 1
-  let g:nvim_tree_follow = 1
   let g:nvim_tree_indent_markers = 1
   let g:nvim_tree_git_hl = 1
   nnoremap <silent> <C-n> :NvimTreeToggle<CR>
@@ -205,6 +204,7 @@ lua require('spaceline')
 
 lua require('lsp')
 lua require('plugins.bufferline')
+lua require('plugins.nvimtree')
 lua require('plugins.telescope')
 lua require('surround').setup({})
 lua require('gitsigns').setup({})
