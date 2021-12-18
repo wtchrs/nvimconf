@@ -1,72 +1,7 @@
-local lspconfig = require('lspconfig')
-local configs = require('lspconfig/configs')
-local lspinstall = require('lspinstall')
+require('lsp.installer')
+require('lsp.rust')
+require('trouble').setup({})
 
-if not lspconfig.emmet_ls then
-  configs.emmet_ls = {
-    default_config = {
-      cmd = {'emmet-ls', '--stdio'};
-      filetypes = {'html', 'css'};
-      root_dir = function(_)
-        return vim.loop.cwd()
-      end;
-      settings = {};
-    };
-  }
-end
-
-local function make_config()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  return {
-    capabilities = capabilities,
-  }
-end
-
--- lsp-install
-local function setup_servers()
-  lspinstall.setup()
-
-  local required_servers = {
-    'lua', 'cmake', 'cpp', 'bash', 'css', 'html', 'typescript', 'vim'
-  }
-  local installed_servers = lspinstall.installed_servers()
-  for _, server in pairs(required_servers) do
-    if not vim.tbl_contains(installed_servers, server) then
-      lspinstall.install_server(server)
-    end
-  end
-
-  local servers = lspinstall.installed_servers()
-  table.insert(servers, 'emmet_ls')
-  table.insert(servers, 'rust_analyzer')
-
-  for _, server in pairs(servers) do
-    local config = make_config()
-
-    if server == 'lua' then
-      config.settings = {
-        Lua = {
-          diagnostics = {
-              globals = { 'vim' }
-          }
-        }
-      }
-    end
-    if server == 'clangd' then
-      config.filetypes = {'c', 'cpp'};
-    end
-
-    lspconfig[server].setup(config)
-  end
-end
-
-setup_servers()
-
-lspinstall.post_install_hook = function ()
-  setup_servers()
-  vim.cmd('bufdo e')
-end
 
 require('compe').setup {
   enabled = true;
@@ -128,9 +63,6 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   }
 }
-
-require('trouble').setup({})
-require('lsp.rust')
 
 -- Highlighting symbols under cursor
 vim.cmd([[augroup HiSymbols]])

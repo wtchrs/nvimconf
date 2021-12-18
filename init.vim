@@ -19,7 +19,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
   set omnifunc=v:lua.vim.lsp.omnifunc
-Plug 'kabouzeid/nvim-lspinstall'
+" Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
 
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'
@@ -44,7 +45,8 @@ Plug 'hrsh7th/nvim-compe'
     return stridx(">]})'\"`", current_char)==-1 ? "\t" : "\<Right>"
   endfunction
 
-Plug 'glepnir/lspsaga.nvim'
+" Plug 'glepnir/lspsaga.nvim'
+Plug 'tami5/lspsaga.nvim'
   " lsp provider to find the cursor word definition and reference
   nnoremap <silent> gh <cmd>Lspsaga lsp_finder<CR>
   " code action

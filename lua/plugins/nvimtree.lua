@@ -1,6 +1,8 @@
 require'nvim-tree'.setup {
   hijack_cursor = true,
-  lsp_diagnostics = false,
+  diagnostics = {
+    enable = false
+  },
   update_focused_file = {
     enable = true,
   },
