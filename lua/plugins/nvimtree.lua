@@ -1,5 +1,6 @@
-require'nvim-tree'.setup {
+require('nvim-tree').setup {
   hijack_cursor = true,
+  -- auto_close = true,
   diagnostics = {
     enable = false
   },

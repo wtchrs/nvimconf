@@ -146,13 +146,11 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'kyazdani42/nvim-tree.lua'
-  let g:nvim_tree_side = 'right'
   let g:nvim_tree_quit_on_open = 1
   let g:nvim_tree_indent_markers = 1
   let g:nvim_tree_git_hl = 1
-  nnoremap <silent> <C-n> :NvimTreeToggle<CR>
-  nnoremap <leader>r :NvimTreeRefresh<CR>
-  nnoremap <leader>n :NvimTreeFindFile<CR>
+  nnoremap <silent> <leader>n :NvimTreeToggle<CR>
+  nnoremap <leader>fn :NvimTreeFindFile<CR>
 
 Plug 'akinsho/nvim-bufferline.lua'
 
