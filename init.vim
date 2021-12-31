@@ -71,7 +71,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   augroup TreesitterFT
     autocmd!
     autocmd BufNewFile,BufRead tsconfig*.json setlocal filetype=jsonc
-    autocmd BufNewFile,BufRead *.hbs setlocal filetype=html
+    autocmd FileType handlebars setlocal filetype=html
   augroup END
 Plug 'p00f/nvim-ts-rainbow'
 
