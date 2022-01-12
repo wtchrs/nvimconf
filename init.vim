@@ -19,7 +19,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
   set omnifunc=v:lua.vim.lsp.omnifunc
-" Plug 'kabouzeid/nvim-lspinstall'
 Plug 'williamboman/nvim-lsp-installer'
 
 Plug 'onsails/lspkind-nvim'
@@ -152,7 +151,7 @@ Plug 'kyazdani42/nvim-tree.lua'
   nnoremap <silent> <leader>n :NvimTreeToggle<CR>
   nnoremap <leader>fn :NvimTreeFindFile<CR>
 
-Plug 'akinsho/nvim-bufferline.lua'
+Plug 'akinsho/bufferline.nvim'
 
 " Vim Theme
 Plug 'shaunsingh/nord.nvim'
