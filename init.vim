@@ -136,7 +136,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'blackcauldron7/surround.nvim'
 
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'glepnir/galaxyline.nvim'
+Plug 'NTBBloodbath/galaxyline.nvim'
 Plug 'glepnir/dashboard-nvim'
   let g:dashboard_default_executive = 'telescope'
 
@@ -199,7 +199,7 @@ call plug#end()
 lua require('nord').set()
 
 " Galaxyline Theme
-lua require('spaceline')
+lua require('themes.spaceline')
 
 lua require('lsp')
 lua require('plugins.bufferline')
