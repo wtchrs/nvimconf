@@ -133,7 +133,8 @@ Plug 'Raimondi/delimitMate'
   let delimitMate_expand_cr=1
   let delimitMate_expand_space=1
 
-Plug 'blackcauldron7/surround.nvim'
+" Plug 'blackcauldron7/surround.nvim'
+Plug 'tpope/vim-surround'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'NTBBloodbath/galaxyline.nvim'
@@ -205,7 +206,7 @@ lua require('lsp')
 lua require('plugins.bufferline')
 lua require('plugins.nvimtree')
 lua require('plugins.telescope')
-lua require('surround').setup({})
+" lua require('surround').setup({})
 lua require('gitsigns').setup({})
 
 set background=dark
