@@ -1,8 +1,17 @@
 require('nvim-tree').setup {
   hijack_cursor = true,
-  -- auto_close = true,
   diagnostics = {
     enable = false
+  },
+  renderer = {
+    indent_markers = {
+      enable = true
+    }
+  },
+  actions = {
+    open_file = {
+      quit_on_open = true
+    }
   },
   update_focused_file = {
     enable = true,

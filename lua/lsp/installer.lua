@@ -10,7 +10,8 @@ local servers = {
   "emmet_ls",
   "tsserver",
   "jsonls",
-  "vimls"
+  "vimls",
+  "pyright"
 }
 
 for _, name in pairs(servers) do
