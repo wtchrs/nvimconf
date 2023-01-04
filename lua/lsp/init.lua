@@ -2,7 +2,6 @@ require('lsp.installer')
 require('lsp.rust')
 require('trouble').setup({})
 
-
 require('compe').setup {
   enabled = true;
   autocomplete = true;

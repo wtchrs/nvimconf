@@ -19,7 +19,9 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'neovim/nvim-lspconfig'
   set omnifunc=v:lua.vim.lsp.omnifunc
-Plug 'williamboman/nvim-lsp-installer'
+" Plug 'williamboman/nvim-lsp-installer'
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 
 Plug 'onsails/lspkind-nvim'
 Plug 'hrsh7th/nvim-compe'

@@ -1,5 +1,3 @@
-local lsp_installer = require "nvim-lsp-installer"
-
 local servers = {
   "sumneko_lua",
   "cmake",
@@ -14,39 +12,46 @@ local servers = {
   "pyright"
 }
 
-for _, name in pairs(servers) do
-  local server_is_found, server = lsp_installer.get_server(name)
-  if server_is_found then
-    if not server:is_installed() then
-      print("Installing " .. name)
-      server:install()
-    end
-  end
-end
-
-local enhance_server_opts = {
-  -- Provide settings that should only apply to specific servers
-  ["sumneko_lua"] = function(opts)
-    opts.settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim' }
-        }
-      }
-    }
-  end,
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = servers,
 }
 
--- Register a handler that will be called for all installed servers.
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
+-- local lsp_installer = require "nvim-lsp-installer"
 
-  -- Customize the options passed to the server
-  if enhance_server_opts[server.name] then
-    enhance_server_opts[server.name](opts)
-  end
+-- for _, name in pairs(servers) do
+--   local server_is_found, server = lsp_installer.get_server(name)
+--   if server_is_found then
+--     if not server:is_installed() then
+--       print("Installing " .. name)
+--       server:install()
+--     end
+--   end
+-- end
 
-  server:setup(opts)
-end)
+-- local enhance_server_opts = {
+--   -- Provide settings that should only apply to specific servers
+--   ["sumneko_lua"] = function(opts)
+--     opts.settings = {
+--       Lua = {
+--         diagnostics = {
+--           globals = { 'vim' }
+--         }
+--       }
+--     }
+--   end,
+-- }
 
-lsp_installer.settings {}
+-- -- Register a handler that will be called for all installed servers.
+-- lsp_installer.on_server_ready(function(server)
+--   local opts = {}
+
+--   -- Customize the options passed to the server
+--   if enhance_server_opts[server.name] then
+--     enhance_server_opts[server.name](opts)
+--   end
+
+--   server:setup(opts)
+-- end)
+
+-- lsp_installer.settings {}
