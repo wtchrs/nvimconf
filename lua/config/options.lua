@@ -10,3 +10,14 @@ end
 
 -- Set markdown rendering disable
 vim.opt.conceallevel = 0
+
+-- Set indent size
+vim.opt.shiftwidth = 4
+
+-- Set highlight
+vim.api.nvim_create_autocmd("ColorScheme", {
+  pattern = "*",
+  callback = function()
+    vim.api.nvim_set_hl(0, "LspInlayHint", { fg = "#50586E" })
+  end,
+})
