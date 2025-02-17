@@ -1,4 +1,6 @@
 return {
+  "tikhomirov/vim-glsl",
+
   {
     "saghen/blink.cmp",
     lazy = false,

@@ -12,3 +12,10 @@ vim.api.nvim_create_autocmd({ "ColorScheme", "LspAttach" }, {
     vim.api.nvim_set_hl(0, "Pmenu", { bg = "#2e3440" })
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*.vs", "*.fs" },
+  callback = function()
+    vim.bo.filetype = "glsl"
+  end,
+})
