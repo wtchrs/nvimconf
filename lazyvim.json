@@ -3,9 +3,8 @@
     "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.lang.clangd",
     "lazyvim.plugins.extras.lang.cmake",
-    "lazyvim.plugins.extras.lang.docker",
-    "lazyvim.plugins.extras.lang.python",
-    "lazyvim.plugins.extras.lang.yaml"
+    "lazyvim.plugins.extras.lang.java",
+    "lazyvim.plugins.extras.lang.nix"
   ],
   "install_version": 7,
   "news": {
