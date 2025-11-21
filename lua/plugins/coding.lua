@@ -3,6 +3,7 @@ return {
 
   {
     "saghen/blink.cmp",
+    version = "1.*",
     lazy = false,
     opts = {
       completion = {
@@ -36,7 +37,7 @@ return {
 
   {
     "mason-org/mason.nvim",
-    version = "1.11.0",
+    -- version = "1.11.0",
     opts = {
       ui = {
         border = "rounded",
@@ -46,6 +47,25 @@ return {
 
   {
     "mason-org/mason-lspconfig.nvim",
-    version = "1.32.0",
+    -- version = "1.32.0",
   },
+
+  {
+    "benomahony/uv.nvim",
+    ft = "python",
+    opts = {
+      auto_activate_venv = true,
+      notify_activate_venv = true,
+      keymaps = {
+        prefix = "<leader>p",
+        -- venv = false,
+        -- init = false,
+      },
+    },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+  },
+
+  "goerz/jupytext.nvim",
 }
