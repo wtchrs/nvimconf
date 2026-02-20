@@ -13,3 +13,6 @@ vim.opt.conceallevel = 0
 
 -- Set indent size
 vim.opt.shiftwidth = 4
+
+-- Set mouse move event
+vim.opt.mousemoveevent = true
