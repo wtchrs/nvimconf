@@ -42,4 +42,18 @@ return {
 
   { "stevearc/conform.nvim", dependencies = {} },
   { "mfussenegger/nvim-lint", dependencies = {} },
+
+  -- local plugin for custom commands that print linter information
+  {
+    name = "lintinfo.nvim",
+    dir = vim.fn.stdpath("config") .. "/local/lintinfo.nvim",
+    dependencies = { "mfussenegger/nvim-lint" },
+
+    event = "VeryLazy",
+    cmd = { "LintInfo", "LintInfoAll" },
+
+    config = function()
+      require("lintinfo").setup_commands()
+    end,
+  },
 }
