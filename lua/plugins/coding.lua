@@ -1,6 +1,4 @@
 return {
-  "tikhomirov/vim-glsl",
-
   {
     "saghen/blink.cmp",
     version = "1.*",
@@ -35,23 +33,11 @@ return {
     },
   },
 
-  {
-    "mason-org/mason.nvim",
-    -- version = "1.11.0",
-    opts = {
-      ui = {
-        border = "rounded",
-      },
-    },
-  },
-
-  {
-    "mason-org/mason-lspconfig.nvim",
-    -- version = "1.32.0",
-  },
+  { "tikhomirov/vim-glsl" },
 
   {
     "benomahony/uv.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" },
     ft = "python",
     opts = {
       auto_activate_venv = true,
@@ -62,10 +48,5 @@ return {
         -- init = false,
       },
     },
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
   },
-
-  "goerz/jupytext.nvim",
 }
