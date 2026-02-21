@@ -19,6 +19,11 @@ git clone https://github.com/wtchrs/nvimconf ~/.config/nvim
 nvim
 ```
 
+## LSP servers, formatters, and linters
+
+I disabled `mason.nvim`, so you'll need to install LSP servers, formatters, and linters manually. Alternatively, you can re-enable `mason.nvim` to manage them automatically.
+You can check what's missing with `:LspInfo`, `:ConformInfo`, and `:LintInfoAll`.
+
 [lazyvim]: https://github.com/LazyVim/LazyVim
 [lazyvim-starter]: https://github.com/LazyVim/starter
 [lazyvim-doc]: https://lazyvim.github.io/installation
