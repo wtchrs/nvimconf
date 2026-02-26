@@ -29,6 +29,21 @@ return {
         },
       })
 
+      opts.servers.tailwindcss = vim.tbl_deep_extend("force", opts.servers.tailwindcss or {}, {
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                { "clsx\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                -- (optional) shadcn/ui cn(...) wrapper
+                { "cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+              },
+            },
+          },
+        },
+      })
+
       -- Set `mason = false` for all lsp servers
       for server, server_opts in pairs(opts.servers) do
         if server_opts == true then
