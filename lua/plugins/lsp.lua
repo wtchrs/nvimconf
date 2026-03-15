@@ -11,6 +11,9 @@ return {
     opts = function(_, opts)
       opts.servers = opts.servers or {}
 
+      -- Enable awk_ls
+      opts.servers.awk_ls = true
+
       -- Overwrite default lua_ls server settings
       opts.servers.lua_ls = vim.tbl_deep_extend("force", opts.servers.lua_ls or {}, {
         settings = {
